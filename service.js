@@ -52,12 +52,13 @@ const emptyMassageCheck = async (date) => {
 
   const root = htmlDocument.querySelector('.subBoard_reservation');
   const aList = Array.from(root.querySelectorAll('a'));
-  const oriFiltered = aList.filter(
+  const emptyFiltered = aList.filter((a) => a.attrs.href.includes('inputHealth'));
+  const oriFiltered = emptyFiltered.filter(
     (a) => a.attrs.href.includes('HEL20231220001') || a.attrs.href.includes('HEL20240318001')
   );
   const timeFiltered = oriFiltered.filter((a) => a.attrs.href.split(',').at(-3).replaceAll("'", '') * 1 < 2000);
   const result = timeFiltered.map((a) => {
-    const managerCode = a.attrs.href.split(',').at(0).split('inputHealth(')[1].replaceAll("'", '');
+    const managerCode = a.attrs.href.split(',').at(0).split('inputHealth(')[1]?.replaceAll("'", '');
     return {
       date,
       time: a.attrs.href.split(',').at(-3).replaceAll("'", '').replaceAll('\t', '').replaceAll('\n', ''),
