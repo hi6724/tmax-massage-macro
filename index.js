@@ -21,7 +21,12 @@ async function refreshHandler(cookie) {
 }
 
 async function reserveEmptyMassage() {
-  for (const date of getWeekdays(8)) {
+  const now = new Date();
+  const date = now.getDate();
+  const month = now.getMonth() + 1;
+  let targetMonth = date >= 25 ? month + 1 : month;
+
+  for (const date of getWeekdays(targetMonth)) {
     await delay(3000);
     const resultList = await emptyMassageCheck(date);
     for (const result of resultList) {
